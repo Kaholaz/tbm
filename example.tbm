@@ -1,0 +1,9 @@
+1: {"name": "TBM diameter", "notation": "tbmd", "unit": "m", "minValue": 3, "maxValue": 10}
+3: {"name": "Cutterhead RPM"}
+5: {"name": "Porosity"}
+
+Module Test
+$3 = 3 * $1 + 2 ^ 2
+Module Zone
+$5 = 4 + $3
+End
