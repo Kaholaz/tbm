@@ -1,16 +1,5 @@
-import gleam/option.{type Option}
-import gleam/result.{then}
-import gleam/float.{power}
-import gleam/list.{sort}
-import gleam/int
-
-type FuncInput {
-  InputValue(Float)
-  InputArray(List(Float))
-}
-
 type InterpolationStepDefinition {
-  InterpolationStep(value: Float, function: FunctionDefinition)
+  InterpolationStepDefinition(value: Float, function: FunctionDefinition)
 }
 
 type FunctionDefinition {
@@ -23,7 +12,7 @@ type FunctionDefinition {
   Div(FunctionDefinition, FunctionDefinition)
   Pow(FunctionDefinition, FunctionDefinition)
   Interpolate(Int, List(InterpolationStepDefinition))
-  Avg(List(Float))
+  Avg(Int)
 }
 
 type NodeInfo
@@ -32,6 +21,6 @@ type ModuleNode {
   ModuleNode(id: Int, info: NodeInfo, update_func: FunctionDefinition)
 }
 
-type Module {
-  Module(nodes: List(ModuleNode), sub_modules: List(Module))
+type ModuleDefinition {
+  ModuleDefinition(nodes: List(ModuleNode), sub_modules: List(ModuleDefinition))
 }
