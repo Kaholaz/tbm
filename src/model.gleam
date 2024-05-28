@@ -29,7 +29,7 @@ fn model_contains_value(model: Model, id) {
   |> result.is_ok
 }
 
-fn get_model_value(model: Model, id) -> Result(#(Model, Float), Nil) {
+fn get_model_value(model: Model, id) -> Result(#(Model, Float), _) {
   use node <- then(
     model.nodes
     |> dict.get(id),
@@ -105,7 +105,7 @@ fn insert_variables(
   model: Model,
   id: Int,
   function: FunctionDefinition,
-) -> Result(#(Model, Function), Nil) {
+) -> Result(#(Model, Function), _) {
   let binary_insert_variables = fn(a, b, f: fn(Function, Function) -> Function) {
     use #(model, func_a) <- then(insert_variables(model, id, a))
     use #(model, func_b) <- then(insert_variables(model, id, b))
@@ -169,7 +169,7 @@ fn insert_variables_interpolate(
   model: Model,
   id,
   step_definitions,
-) -> Result(#(Model, Function), Nil) {
+) -> Result(#(Model, Function), _) {
   use #(model, value) <- then(get_value(model, id))
   use value <- then(case value {
     Value(v) -> Ok(v)
@@ -194,7 +194,7 @@ fn insert_variables_interpolate(
   })
 }
 
-fn recalculate_value(model: Model, id) -> Result(#(Model, Float), Nil) {
+fn recalculate_value(model: Model, id) -> Result(#(Model, Float), _) {
   use node <- then(
     model.nodes
     |> dict.get(id),
@@ -214,7 +214,7 @@ fn recalculate_value(model: Model, id) -> Result(#(Model, Float), Nil) {
   Ok(#(Model(..model, nodes: nodes), recommended_value))
 }
 
-pub fn set_value(model: Model, id, value) -> Result(Model, Nil) {
+pub fn set_value(model: Model, id, value) -> Result(Model, _) {
   use node <- then(
     model.nodes
     |> dict.get(id),
@@ -231,7 +231,7 @@ pub fn set_value(model: Model, id, value) -> Result(Model, Nil) {
 fn mark_outdated_and_get_dependents(
   model: Model,
   id,
-) -> Result(#(Model, List(Int)), Nil) {
+) -> Result(#(Model, List(Int)), _) {
   use <- result.lazy_or(
     model.nodes
     |> dict.get(id)
@@ -272,7 +272,7 @@ fn mark_outdated_and_get_dependents(
   Ok(#(Model(..model, sub_models: sub_models), dependents))
 }
 
-fn mark_outdated(model: Model, id) -> Result(Model, Nil) {
+fn mark_outdated(model: Model, id) -> Result(Model, _) {
   use #(model, dependents) <- then(mark_outdated_and_get_dependents(model, id))
   dependents
   |> list.fold(Ok(model), fn(acc, dependent) {

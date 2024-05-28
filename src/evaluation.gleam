@@ -21,7 +21,7 @@ pub type Function {
 fn binary_function_eval(
   a: Function,
   b: Function,
-  function: fn(Float, Float) -> Result(Float, Nil),
+  function: fn(Float, Float) -> Result(Float, _),
 ) {
   case evaluate(a), evaluate(b) {
     Ok(a), Ok(b) -> function(a, b)
@@ -29,7 +29,7 @@ fn binary_function_eval(
   }
 }
 
-pub fn evaluate(function: Function) -> Result(Float, Nil) {
+pub fn evaluate(function: Function) -> Result(Float, _) {
   case function {
     Value(x) -> Ok(x)
     Add(a, b) -> {
@@ -60,7 +60,7 @@ pub fn evaluate(function: Function) -> Result(Float, Nil) {
 pub fn interpolate(
   value: Float,
   interpolation: List(InterpolationStep),
-) -> Result(Float, Nil) {
+) -> Result(Float, _) {
   let sorted =
     list.sort(interpolation, by: fn(a, b) { float.compare(a.value, b.value) })
   use first <- then(case sorted {
