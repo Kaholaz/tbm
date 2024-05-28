@@ -1,5 +1,5 @@
 import gleam/io
 
 pub fn main() {
-  io.println("Hello from tbm!")
+  let a = [1, 2, 3]
 }
